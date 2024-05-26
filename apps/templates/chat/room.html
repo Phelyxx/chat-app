@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ room_name.capitalize }} {% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row border rounded" style="min-height: 80vh;">
+            <div class="col-4 border-right">
+                <div class="my-3 mx-3 ">
+                    <div class="input-group">
+                        <input aria-placeholder="Busca tus amigos o contacta nuevos" placeholder="Search ..."
+                               class="form-control"
+                               type="search" name="search" required autocomplete="search"/>
+                               <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit">Search</button>
+                            </div>
+                    </div>
+                </div>
+
+                <ul class="overflow-auto" style="height: 500px;">
+                    <h2 class="ml-2 mb-2 text-gray-600 text-lg my-2">Rooms</h2>
+                    <li>
+                        {% for r in room_list %}
+                        <a class="list-group-item list-group-item-action" href="/chat/{{ r }}/">
+                            <div class="w-full pb-2">
+                                <div class="d-flex justify-content-between">
+                                    <span class="block ml-2 font-semibold text-base text-gray-600 ">{{ r }}</span>
+                                    <span class="block ml-2 text-sm text-gray-600">{{ r.timestamp }}</span>
+                                </div>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </li>
+                </ul>
+            </div>
+            <div class="col-8">
+                <div class="w-full">
+                    <div class="d-flex align-items-center border-bottom pl-3 py-3">
+                        <span class="block ml-2 font-bold text-base text-gray-600">{{ room_name.capitalize }}</span>
+                    </div>
+                    <div id="chat" class="w-full overflow-y-auto p-10 relative" style="height: 700px;"
+                         ref="toolbarChat">
+                        <ul>
+                            <li class="clearfix2">
+                                {% for m in messages %}
+                                    {% if request.user.username == m.user.username %}
+                                        <div class="w-full d-flex justify-content-start">
+                                            <div class="bg-light rounded px-5 py-2 my-2 text-gray-700 relative"
+                                                 style="max-width: 300px;">
+                                                <strong><span class="block text-xs text-right">{{m.user.username}}</span></strong>
+                                                <span class="block">{{ m.content }}</span>
+                                                <span class="block text-xs text-right">{{ m.timestamp|date:'Y-m-d H:i' }}</span>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="w-full d-flex justify-content-end">
+                                            <div class="bg-light rounded px-5 py-2 my-2 text-gray-700 relative"
+                                                 style="max-width: 300px;">
+                                                <strong><span class="block text-xs text-right">{{m.user.username}}</span></strong>
+                                                <span class="block">{{ m.content }}</span>
+                                                <span class="block text-xs text-left">{{ m.timestamp|date:'Y-m-d H:i' }}</span>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                                <div id="chat-messages"></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="w-full py-3 px-3 d-flex align-items-center justify-content-between border-top">
+                        <input aria-placeholder="Escribe un mensaje aquí" placeholder="Start Chatting ..."
+                               class="form-control mx-3"
+                               type="text" name="message" id="chat-message-input" required/>
+
+                        <button class="btn btn-outline-secondary" id="chat-message-submit">
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ room_name|json_script:"json-roomname" }}
+    {{ username|json_script:"json-username" }}
+    {{ req_username|json_script:"json-req-username" }}
+
+{% endblock %}

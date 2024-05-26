@@ -1,0 +1,34 @@
+{
+  "name": "front",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev:server": "vite --port=3000",
+    "dev": "npm-run-all --parallel dev:*",
+    "build:server": "cross-env NODE_ENV=production vite build",
+    "build": "npm-run-all build:*",
+    "make-dirs": "mkdir -p ../public/css ../public/js ",
+    "remove-cache:pre": "rimraf ../public/js/*.js ../public/css/*.css ../dist-front",
+    "remove-cache:post": "rimraf ../dist-front ./dist-front",
+    "rename:js": "renamer --regex --find 'index\\.[^\\.]+\\.js' --replace 'index.min.js' ./dist-front/assets/*.js",
+    "rename:css": "renamer --regex --find 'index\\.[^\\.]+\\.css' --replace 'index.min.css' ./dist-front/assets/*.css",
+    "copy:css": "copyfiles -f './dist-front/assets/*.min.css' ../public/css",
+    "copy:js": "copyfiles -f './dist-front/assets/*.min.js' ../public/js",
+    "production": "npm-run-all make-dirs remove-cache:pre build rename:* copy:* remove-cache:post"
+  },
+  "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^4.1.3",
+    "autoprefixer": "^10.4.2",
+    "bootstrap": "^5.3.3",
+    "cssnano": "^5.0.15",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "sass": "^1.77.2",
+    "vite": "^2.9.7"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.11.8",
+    "chatapp": "file:../..",
+    "reconnecting-websocket": "^4.4.0"
+  }
+}

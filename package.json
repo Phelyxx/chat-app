@@ -1,0 +1,17 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": " Real time chat",
+  "scripts": {
+    "bootstrap": "npm install && npm install --prefix=apps/front"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "copyfiles": "^2.0.0",
+    "cross-env": "^7.0.3",
+    "npm-run-all": "^4.1.5",
+    "renamer": "^0.7.0",
+    "rimraf": "^3.0.2"
+  }
+}
