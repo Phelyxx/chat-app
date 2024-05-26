@@ -1,6 +1,15 @@
 
 # Chat App
 
+## App
+
+![image](https://github.com/Phelyxx/chat-app/assets/41241094/bb91a8ac-6fed-4a3e-92b2-9bba83fd497d)
+
+![image](https://github.com/Phelyxx/chat-app/assets/41241094/42c9a747-1ffd-4f43-abf1-ad271743e160)
+
+![image](https://github.com/Phelyxx/chat-app/assets/41241094/2e1f9209-3512-4a9b-98d0-3b98eeac0125)
+
+
 ## Guide
 
 1. Sign up forms: apps\templates\accounts\register_view.html
